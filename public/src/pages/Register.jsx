@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../assets/logo.svg";
@@ -16,6 +16,11 @@ function Register() {
     draggable: true,
     theme: "dark",
   };
+  useEffect(()=>{
+    if(localStorage.getItem('chatsyncuser')){
+      navigate('/');
+    }
+  })
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -50,7 +55,6 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    alert("form");
     if (handleValidation()) {
       const { username, email, password } = values;
       const {data} = await axios.post(registerRoute, {
